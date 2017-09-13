@@ -9,12 +9,15 @@ import sys
 
 # sdfadf
 
+
+
 def stat(args):
     first_train = 0
     last_train = 0
     total_size = 0
     total_entries = 0
     invalid_files = []
+    instruments = 'placeholder'
 
     for filename in args:
         out = ""
@@ -28,7 +31,9 @@ def stat(args):
             f_train = xfel_file["INDEX/trainId"][0]
             out += "\t First Train: {}".format(f_train)
             l_train = xfel_file["INDEX/trainId"][-1]
-            out += "\t Last Train: {}".format(l_train)
+            out += "\t Last Train: {}\t".format(l_train)
+            #TODO instruments = []
+            out += "\n Instruments: {}".format(instruments)
             out += "\n"
 
             total_size += size_mb
