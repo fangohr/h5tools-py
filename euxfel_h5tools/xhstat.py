@@ -7,9 +7,14 @@ import h5py
 import numpy as np
 import sys
 
-# sdfadfd
 
-
+def get_instruments_names(h5input):
+    inst_list = []
+    for k, v in h5input.items():
+        if k == 'INSTRUMENT':
+            for inst, val in h5input[k].items():
+                inst_list.append(inst)
+    return inst_list
 
 def stat(args):
     first_train = 0
@@ -17,10 +22,12 @@ def stat(args):
     total_size = 0
     total_entries = 0
     invalid_files = []
-    instruments = 'placeholder'
+    inst_list = []
+    instruments = ''
 
     for filename in args:
         out = ""
+        instruments = ""
         try:
             xfel_file = h5py.File(filename, 'r')
             out = " File: '{}'\n".format(xfel_file.filename)
@@ -32,10 +39,13 @@ def stat(args):
             out += "\t First Train: {}".format(f_train)
             l_train = xfel_file["INDEX/trainId"][-1]
             out += "\t Last Train: {}\t".format(l_train)
-            #TODO instruments = []
+            inst_list = get_instruments_names(xfel_file)
+            for inst in inst_list:
+                instruments += inst + '\t'
             out += "\n Instruments: {}".format(instruments)
             out += "\n"
-
+            
+            
             total_size += size_mb
             total_entries += entries
 
