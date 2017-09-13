@@ -7,6 +7,7 @@ import h5py
 import numpy as np
 import sys
 
+# sdfadf
 
 def stat(args):
     first_train = 0
